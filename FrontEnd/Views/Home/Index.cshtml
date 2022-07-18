@@ -1,0 +1,125 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="m-3" ng-init="Init();">
+    
+    <div class="row bg-secondary py-2">
+        <div class="col-3">
+            <h1>Employees</h1>
+        </div>
+        <div class="col d-flex">
+            <input type="search" class="form-control" ng-model="filtro.searchText" placeholder="Search employee by Last Name/Phone number" />
+            <button type="button" class="btn btn-info" ng-click="searchEmployees();">Search</button>
+        </div>
+        <div class="col-4 text-end">
+            <button type="button" class="btn btn-success mt-2" ng-click="startAddNewEmployee();">Add new employee</button>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Phone</th>
+                    <th>ZIP Code</th>
+                    <th>Hire Date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="item in EmployeeList">
+                    <td>{{item.employeeId}}</td>
+                    <td>{{item.employeeLastName}}</td>
+                    <td>{{item.employeeFirstName}}</td>
+                    <td>{{item.employeePhone}}</td>
+                    <td>{{item.employeeZip}}</td>
+                    <td>{{item.hireDate | date: 'MM/dd/yyyy'}}</td>
+                    <td>
+                        <button type="button" class="btn btn-warning" ng-click="startEditEmployee(item);">Edit</button>
+                        <button type="button" class="btn btn-danger" ng-click="askDeleteEmployee(item.employeeId);">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="addUsrForm">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <h3>Employee Info</h3>
+
+                        <div class="row mt-5">
+                            <div class="col-4">
+                                <label>Employee ID :</label>
+                            </div>
+                            <div class="col-8"> {{ EmployeeTemp.EmployeeId }} </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-4">
+                                <label>Last Name *:</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" required ng-model="EmployeeTemp.EmployeeLastName" />
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-4">
+                                <label>First Name *:</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" required ng-model="EmployeeTemp.EmployeeFirstName" />
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-4">
+                                <label>Phone Numbre :</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" class="form-control" id="phoneNumber" ng-model="EmployeeTemp.EmployeePhone" />
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-4">
+                                <label>Zip Code :</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="number" class="form-control" ng-model="EmployeeTemp.EmployeeZip" />
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-4">
+                                <label>Hire Date *:</label>
+                            </div>
+                            <div class="col-8">
+                                <input type="text" data-date-format="MM/DD/YYYY" class="form-control" id="datepicker" placeholder="MM/DD/YYYY" readonly required ng-model="EmployeeTemp.HireDate" />
+                                <label ng-show="EmployeeTemp.validDate == false" class="text-danger">Hire date is required</label>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4 text-end">
+                            <div class="col-4">
+                            </div>
+                            <div class="col-8">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancell</button>
+                                <button type="submit" class="btn btn-info" ng-click="AddOrUpdateEmployee();">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
